@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to BlogSpace</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="badge">Day 1 Foundation</div>
+      <h1>Welcome to BlogSpace</h1>
+      <p class="subtitle">Your blog platform is being built.</p>
+    </header>
+
+    <main class="card">
+      <h2>Project Status</h2>
+      <p>The Express.js server, EJS view engine, and SQLite database have been successfully initialized.</p>
+      
+      <div class="checklist-preview">
+        <div class="check-item">
+          <span class="dot active"></span>
+          <span><strong>Day 1:</strong> Setup & Backend Foundation (Completed)</span>
+        </div>
+        <div class="check-item pending">
+          <span class="dot"></span>
+          <span><strong>Days 2–7:</strong> Database Schema, Post Display, CRUD, & UI polish</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> BlogSpace &bull; Built with Node.js & Express</p>
+    </footer>
+  </div>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
