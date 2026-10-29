@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Post Not Found' %> - BlogSpace</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Global Navigation -->
+    <nav class="navbar">
+      <a href="/" class="nav-brand">BlogSpace</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/create" class="nav-link nav-btn">Create Blog</a>
+      </div>
+    </nav>
+
+    <!-- 404 Not Found Display -->
+    <main class="not-found-container">
+      <div class="not-found-card">
+        <div class="not-found-badge">404</div>
+        <h2><%= typeof message !== 'undefined' ? message : 'Blog post not found.' %></h2>
+        <p class="not-found-desc">
+          The blog post you requested does not exist or may have been removed.
+        </p>
+        <div class="not-found-actions">
+          <a href="/" class="btn-primary">&larr; Back to Blogs</a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> BlogSpace &bull; Powered by Firebase Firestore</p>
+    </footer>
+  </div>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

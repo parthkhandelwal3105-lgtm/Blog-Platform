@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Blog Post - BlogSpace</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Global Navigation -->
+    <nav class="navbar">
+      <a href="/" class="nav-brand">BlogSpace</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/create" class="nav-link nav-btn active">Create Blog</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="badge">Day 4: Read & View Posts</div>
+      <h1>Create New Blog Post</h1>
+      <p class="subtitle">Write and publish your story to Cloud Firestore</p>
+    </header>
+
+    <!-- Validation / Error Message -->
+    <% if (error) { %>
+      <div class="alert-box error-alert">
+        <strong>⚠️ Unable to Publish Post:</strong>
+        <p><%= error %></p>
+      </div>
+    <% } %>
+
+    <main class="form-card">
+      <form method="POST" action="/posts" class="create-post-form">
+        <!-- Title Input -->
+        <div class="form-group">
+          <label for="title">Title <span class="required-star">*</span></label>
+          <input 
+            type="text" 
+            id="title" 
+            name="title" 
+            placeholder="Enter blog post title..." 
+            value="<%= formData && formData.title ? formData.title : '' %>"
+            required
+          >
+        </div>
+
+        <!-- Author Input -->
+        <div class="form-group">
+          <label for="author">Author <span class="required-star">*</span></label>
+          <input 
+            type="text" 
+            id="author" 
+            name="author" 
+            placeholder="Your name or pen name..." 
+            value="<%= formData && formData.author ? formData.author : '' %>"
+            required
+          >
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="form-group">
+          <label for="category">Category <span class="required-star">*</span></label>
+          <select id="category" name="category" required>
+            <option value="" disabled <%= !formData || !formData.category ? 'selected' : '' %>>Select Category &#9662;</option>
+            <% const categoriesList = ['Technology', 'Programming', 'Education', 'Travel', 'Lifestyle', 'Other']; %>
+            <% categoriesList.forEach(cat => { %>
+              <option value="<%= cat %>" <%= formData && formData.category === cat ? 'selected' : '' %>>
+                <%= cat %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <!-- Content Textarea -->
+        <div class="form-group">
+          <label for="content">Content <span class="required-star">*</span></label>
+          <textarea 
+            id="content" 
+            name="content" 
+            rows="8" 
+            placeholder="Write your blog post content here..." 
+            required
+          ><%= formData && formData.content ? formData.content : '' %></textarea>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <a href="/" class="btn-secondary">Cancel</a>
+          <button type="submit" class="btn-primary">Publish Blog</button>
+        </div>
+      </form>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> BlogSpace &bull; Powered by Firebase Firestore</p>
+    </footer>
+  </div>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

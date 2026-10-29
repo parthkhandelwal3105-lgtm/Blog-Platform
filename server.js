@@ -1,23 +1,18 @@
 // ==========================================
-// BlogSpace - Day 1 Server Setup
+// BlogSpace - Server Setup
 // ==========================================
 
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const Database = require('better-sqlite3');
+
+// Initialize Firebase configuration & Firestore connection
+// (All Firebase Admin SDK initialization is cleanly abstracted in config/firebase.js)
+const { isConfigured } = require('./config/firebase');
 
 // Initialize the Express application
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// ==========================================
-// Database Connection (SQLite)
-// ==========================================
-// We connect to the SQLite database located at database/blog.db.
-// better-sqlite3 opens the file, or creates it if it doesn't exist.
-const dbPath = path.join(__dirname, 'database', 'blog.db');
-const db = new Database(dbPath);
-console.log(`[Database] SQLite connected at: ${dbPath}`);
 
 // ==========================================
 // Express Configuration & Middleware
@@ -30,21 +25,28 @@ app.set('views', path.join(__dirname, 'views'));
 // 2. Static Files: Serve stylesheets, client scripts, and images from "public"
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 3. Body Parser: Parses incoming URL-encoded form data (needed for future POST forms)
+// 3. Body Parser: Parses incoming URL-encoded form data (needed for POST forms)
 app.use(express.urlencoded({ extended: true }));
 
 // ==========================================
 // Routes
 // ==========================================
 
-// Home Route: Render the Day 1 welcome page
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-// Posts Router: Mount our placeholder routes for future CRUD operations
+// Posts Router: Contains GET /posts, GET /posts/:id, GET /posts/create, POST /posts, etc.
 const postsRouter = require('./routes/posts');
 app.use('/posts', postsRouter);
+
+// Home Route: GET / retrieves all blog posts directly from Firestore via postsRouter
+app.get('/', (req, res, next) => {
+  req.url = '/';
+  postsRouter(req, res, next);
+});
+
+// Shortcut Route: /create renders the create blog post form
+app.get('/create', (req, res, next) => {
+  req.url = '/create';
+  postsRouter(req, res, next);
+});
 
 // ==========================================
 // Start Server
@@ -53,6 +55,7 @@ app.listen(PORT, () => {
   console.log(`===========================================`);
   console.log(`🚀 BlogSpace Server is running!`);
   console.log(`📡 Local URL: http://localhost:${PORT}`);
-  console.log(`📅 Day 1 Foundation: Project Setup Complete`);
+  console.log(`📅 Day 4: Read & View Blog Posts`);
+  console.log(`💾 Database Status: ${isConfigured ? '🟢 Connected to Cloud Firestore' : '🟡 Awaiting Firebase Credentials in .env'}`);
   console.log(`===========================================`);
 });

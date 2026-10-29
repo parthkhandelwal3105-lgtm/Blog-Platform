@@ -1,8 +1,12 @@
 # Dependencies
 node_modules/
 
-# Environment variables
+# Environment variables & secrets
 .env
+*.json
+!package.json
+!package-lock.json
+serviceAccountKey.json
 
 # OS generated files
 .DS_Store

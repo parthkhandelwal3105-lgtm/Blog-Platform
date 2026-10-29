@@ -3,35 +3,83 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to BlogSpace</title>
+  <title>BlogSpace - Latest Posts</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div class="container">
+    <!-- Global Navigation -->
+    <nav class="navbar">
+      <a href="/" class="nav-brand">BlogSpace</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/create" class="nav-link nav-btn">Create Blog</a>
+      </div>
+    </nav>
+
     <header class="hero">
-      <div class="badge">Day 1 Foundation</div>
-      <h1>Welcome to BlogSpace</h1>
-      <p class="subtitle">Your blog platform is being built.</p>
+      <div class="badge">Day 4: Read & View Posts</div>
+      <h1>BlogSpace</h1>
+      <p class="subtitle">A full-stack blog platform powered by Node.js, Express & Cloud Firestore</p>
     </header>
 
-    <main class="card">
-      <h2>Project Status</h2>
-      <p>The Express.js server, EJS view engine, and SQLite database have been successfully initialized.</p>
-      
-      <div class="checklist-preview">
-        <div class="check-item">
-          <span class="dot active"></span>
-          <span><strong>Day 1:</strong> Setup & Backend Foundation (Completed)</span>
-        </div>
-        <div class="check-item pending">
-          <span class="dot"></span>
-          <span><strong>Days 2–7:</strong> Database Schema, Post Display, CRUD, & UI polish</span>
-        </div>
+    <!-- Error / Status Notice if Firebase is not yet configured -->
+    <% if (error) { %>
+      <div class="alert-box">
+        <strong>⚠️ Database Notice:</strong>
+        <p><%= error %></p>
+        <small>Follow the instructions in <code>README.md</code> to set your Firebase credentials in <code>.env</code>.</small>
       </div>
+    <% } %>
+
+    <main>
+      <div class="section-header">
+        <div class="header-title-group">
+          <h2>Latest Posts</h2>
+          <span class="posts-count"><%= posts.length %> <%= posts.length === 1 ? 'post' : 'posts' %></span>
+        </div>
+        <a href="/create" class="btn-create-post">✍️ Create New Post</a>
+      </div>
+
+      <% if (posts && posts.length > 0) { %>
+        <div class="posts-list">
+          <% posts.forEach(post => { %>
+            <article class="post-card">
+              <div class="post-header">
+                <span class="post-category"><%= post.category %></span>
+                <time class="post-date"><%= post.formattedDate %></time>
+              </div>
+
+              <h3 class="post-title"><%= post.title %></h3>
+
+              <!-- Short content preview (truncated safely to prevent long walls of text) -->
+              <p class="post-preview"><%= post.preview %></p>
+
+              <div class="post-divider"></div>
+
+              <div class="post-footer">
+                <div class="post-meta-info">
+                  <span class="post-author">By <%= post.author %></span>
+                </div>
+                <!-- Read More button linking to /posts/:id -->
+                <a href="/posts/<%= post.id %>" class="btn-read-more">Read More &rarr;</a>
+              </div>
+            </article>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="empty-state">
+          <p>No blog posts yet.</p>
+          <div class="empty-hint">
+            <a href="/create" class="btn-primary" style="margin-right: 8px;">✍️ Write First Post</a>
+            <a href="/posts/seed-test" class="btn-test">➕ Insert Sample Test Post</a>
+          </div>
+        </div>
+      <% } %>
     </main>
 
     <footer>
-      <p>&copy; <%= new Date().getFullYear() %> BlogSpace &bull; Built with Node.js & Express</p>
+      <p>&copy; <%= new Date().getFullYear() %> BlogSpace &bull; Powered by Firebase Firestore</p>
     </footer>
   </div>
 

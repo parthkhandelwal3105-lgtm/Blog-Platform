@@ -1,7 +1,7 @@
 {
   "name": "blog-platform",
   "version": "1.0.0",
-  "description": "A beginner-friendly full-stack blog platform built with Node.js, Express, EJS, and SQLite",
+  "description": "A beginner-friendly full-stack blog platform built with Node.js, Express, EJS, and Firebase Firestore",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -11,14 +11,16 @@
     "blog",
     "express",
     "ejs",
-    "sqlite"
+    "firebase",
+    "firestore"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^13.0.3",
+    "dotenv": "^18.0.4",
     "ejs": "^6.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "firebase-admin": "^14.5.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

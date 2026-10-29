@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= post.title %> - BlogSpace</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Global Navigation -->
+    <nav class="navbar">
+      <a href="/" class="nav-brand">BlogSpace</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/create" class="nav-link nav-btn">Create Blog</a>
+      </div>
+    </nav>
+
+    <!-- Individual Blog Article -->
+    <main class="single-post-container">
+      <article class="single-post-card">
+        <header class="single-post-header">
+          <span class="post-category"><%= post.category %></span>
+          <h1 class="single-post-title"><%= post.title %></h1>
+          <div class="single-post-meta">
+            <span class="post-author">By <%= post.author %></span>
+            <span class="meta-dot">&bull;</span>
+            <time class="post-date"><%= post.formattedDate %></time>
+          </div>
+        </header>
+
+        <div class="post-divider"></div>
+
+        <!-- Safely Escaped Content to prevent XSS attacks while preserving formatting -->
+        <div class="single-post-content"><%= post.content %></div>
+
+        <div class="post-divider"></div>
+
+        <div class="single-post-footer">
+          <a href="/" class="btn-back">&larr; Back to Blogs</a>
+          <small class="doc-id">Firestore ID: <code><%= post.id %></code></small>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> BlogSpace &bull; Powered by Firebase Firestore</p>
+    </footer>
+  </div>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
